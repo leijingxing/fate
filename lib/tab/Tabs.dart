@@ -95,7 +95,14 @@ class _TabsState extends State<Tabs> {
               },
             ),
             Divider(),
+            ListTile(
+              leading: Icon(Icons.settings,color: Colors.deepOrange,),
+              title: Text("设置"),
+              onTap: () {
 
+              },
+            ),
+            Divider(),
           ],
         ),
       ),
