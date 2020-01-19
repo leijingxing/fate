@@ -27,6 +27,7 @@ dependencies:
   animated_text_kit:
   fluttertoast:
   font_awesome_flutter:
+  package_info:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,3 +1,4 @@
+import 'package:fate/page/Setting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -99,7 +100,9 @@ class _TabsState extends State<Tabs> {
               leading: Icon(Icons.settings,color: Colors.deepOrange,),
               title: Text("设置"),
               onTap: () {
-
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Setting())
+                );
               },
             ),
             Divider(),
