@@ -1,8 +1,6 @@
+import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/Setting.dart';
-import 'package:fate/page/Version.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'Luck.dart';
 import 'Marriage.dart';
 import 'Named.dart';
@@ -69,7 +67,9 @@ class _TabsState extends State<Tabs> {
               leading: Icon(Icons.monetization_on,color: Colors.amber,),
               title: Text("每日财运"),
               onTap: () {
-
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>EveryDayMoney())
+                );
               },
             ),
             Divider(),
@@ -88,18 +88,30 @@ class _TabsState extends State<Tabs> {
 
               },
             ),
+
             Divider(),
-             ListTile(
-              leading: Icon(Icons.format_paint,color: Color(0xFFeaa033),),
-              title: Text("大师签名"),
+            ListTile(
+              leading: Icon(Icons.call,color: Colors.deepPurple,),
+              title: Text("大师测算"),
               onTap: () {
 
+              },
+            ),
+
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.settings,color: Colors.deepOrange,),
+              title: Text("设置"),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Setting())
+                );
               },
             ),
             Divider(),
             ListTile(
               leading: Icon(Icons.settings,color: Colors.deepOrange,),
-              title: Text("设置"),
+              title: Text("协议及声明"),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => Setting())

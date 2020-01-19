@@ -1,4 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+import 'package:fate/list/color.dart';
+import 'package:fate/list/text.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -7,10 +10,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _year;
-  int _mouth;
-  int _day;
-  int _weekday;
+  int _year;  //年
+  int _mouth;  //月
+  int _day;    //日
+  String week; //星期
+
+  int _colors = Random().nextInt(12); //不超过12的随机数
+  String txt;
 
   @override
   void initState() {
@@ -20,7 +26,34 @@ class _HomeState extends State<Home> {
     _year = DateTime.now().year;
     _mouth = DateTime.now().month;
     _day = DateTime.now().day;
-    _weekday = DateTime.now().weekday;
+    NumberChange(DateTime.now().weekday);
+    txt = text[_colors];
+  }
+
+  NumberChange(int i) async {
+    switch (i) {
+      case 1:
+        week = "星期一";
+        break;
+      case 2:
+        week = "星期二";
+        break;
+      case 3:
+        week = "星期三";
+        break;
+      case 4:
+        week = "星期四";
+        break;
+      case 5:
+        week = "星期五";
+        break;
+      case 6:
+        week = "星期六";
+        break;
+      case 7:
+        week = "星期日";
+        break;
+    }
   }
 
   @override
@@ -58,7 +91,7 @@ class _HomeState extends State<Home> {
                           color: Colors.white),
                     ),
                     Text(
-                      "星期$_weekday",
+                      week,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -91,7 +124,7 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       child: Text(
-                        "破土　修坟　纳采　祭祀　修造　盖屋　动土 竖柱",
+                        "破土　修坟　纳采　祭祀　修造　盖屋　动土  竖柱",
                       ),
                     ),
                   ],
@@ -131,7 +164,89 @@ class _HomeState extends State<Home> {
                   ),
                   color: Colors.green[300],
                 ),
-              )
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579449840885&di=de0efd26d32cb5e6aba53ab35cf097e4&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Fbmiddle%2Fa4aae570jw1eu0q31i5iej20c60b9wek.jpg",
+                          ),
+                        ),
+                        title: Text("今日运势",style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(txt),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            "http://pics.sc.chinaz.com/files/pic/pic9/201911/zzpic21499.jpg"
+                          ),
+                        ),
+                        title: Text("幸运颜色",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(color[_colors]["text"],style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 26
+                        ),),
+                      )
+                    ],
+                  ),
+                  color: color[_colors][Color],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            "http://pics.sc.chinaz.com/files/pic/pic9/201911/zzpic21394.jpg"
+                          ),
+                        ),
+                        title: Text("幸运数字",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(_colors.toString(),style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 26
+                        ),),
+                      )
+                    ],
+                  ),
+                  color: color[_colors][Color],
+                ),
+              ),
+
             ],
           ),
         ),

@@ -30,9 +30,15 @@ class _SettingState extends State<Setting> {
   }
 
   Widget _infoTile(String title, String subtitle) {
-    return ListTile(
-      title: Text(title),
-      subtitle: Text(subtitle ?? 'Not set'),
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: ListTile(
+        leading: Text(title),
+        trailing: Text(subtitle ?? 'Not set'),
+      ),
+      decoration: BoxDecoration(
+        color: Colors.greenAccent[100]
+      ),
     );
   }
 
@@ -44,12 +50,9 @@ class _SettingState extends State<Setting> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _infoTile('App name', _packageInfo.appName),
-            _infoTile('Package name', _packageInfo.packageName),
-            _infoTile('App version', _packageInfo.version),
-            _infoTile('Build number', _packageInfo.buildNumber),
+            _infoTile('App名称', _packageInfo.appName),
+            _infoTile('App版本', _packageInfo.version),
           ],
         ),
       ),
