@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Luck.dart';
+import 'Marriage.dart';
 import 'Named.dart';
 import 'home.dart';
 
@@ -16,10 +17,14 @@ class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("命运检测"),
+      ),
       body:  IndexedStack(children: <Widget>[
         Home(),
         Luck(),
         Named(),
+        Marriage(),
       ],
         index: _currentIndex,
       ),
@@ -53,7 +58,16 @@ class _TabsState extends State<Tabs> {
                   "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
                 ),
               )
-            )
+            ),
+            ListTile(
+              //图片赏析
+              leading: Icon(Icons.image),
+              title: Text("学习图片"),
+              onTap: () {
+
+              },
+            ),
+            Divider(),
           ],
         ),
       ),
