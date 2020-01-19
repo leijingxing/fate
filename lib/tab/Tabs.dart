@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'Luck.dart';
 import 'Marriage.dart';
@@ -23,8 +24,8 @@ class _TabsState extends State<Tabs> {
       body:  IndexedStack(children: <Widget>[
         Home(),
         Luck(),
-        Named(),
         Marriage(),
+        Named(),
       ],
         index: _currentIndex,
       ),
@@ -36,6 +37,7 @@ class _TabsState extends State<Tabs> {
           });
         },
           fixedColor: Colors.brown,
+          unselectedItemColor: Colors.grey,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -44,7 +46,9 @@ class _TabsState extends State<Tabs> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.category), title: Text("测运势")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.book), title: Text("起名改名")),
+                icon: Icon(Icons.pregnant_woman), title: Text("测姻缘")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.border_color), title: Text("起名改名")),
           ]
       ),
       drawer: Drawer(
@@ -57,17 +61,41 @@ class _TabsState extends State<Tabs> {
                 backgroundImage: NetworkImage(
                   "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
                 ),
-              )
+              ),
             ),
             ListTile(
-              //图片赏析
-              leading: Icon(Icons.image),
-              title: Text("学习图片"),
+              leading: Icon(Icons.monetization_on,color: Colors.amber,),
+              title: Text("每日财运"),
               onTap: () {
 
               },
             ),
             Divider(),
+            ListTile(
+              leading: Icon(Icons.star,color: Colors.pink,),
+              title: Text("每日星座"),
+              onTap: () {
+
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.insert_drive_file,color: Colors.brown,),
+              title: Text("中国黄历"),
+              onTap: () {
+
+              },
+            ),
+            Divider(),
+             ListTile(
+              leading: Icon(Icons.format_paint,color: Color(0xFFeaa033),),
+              title: Text("大师签名"),
+              onTap: () {
+
+              },
+            ),
+            Divider(),
+
           ],
         ),
       ),

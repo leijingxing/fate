@@ -26,6 +26,7 @@ dependencies:
   shared_preferences:
   animated_text_kit:
   fluttertoast:
+  font_awesome_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
