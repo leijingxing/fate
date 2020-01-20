@@ -1,6 +1,10 @@
+import 'dart:math';
+
+import 'package:fate/list/Image.dart';
 import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/Setting.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Luck.dart';
 import 'Marriage.dart';
 import 'Named.dart';
@@ -12,8 +16,25 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-
+  SharedPreferences sharedPreferences;
   int _currentIndex = 0;
+  String _name;
+  String _email;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _GetUserInfo();
+  }
+
+  Future<String> _GetUserInfo() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      _name = sharedPreferences.get("name");
+      _email = sharedPreferences.getString("email");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +42,22 @@ class _TabsState extends State<Tabs> {
       appBar: AppBar(
         title: Text("命运检测"),
       ),
-      body:  IndexedStack(children: <Widget>[
-        Home(),
-        Luck(),
-        Marriage(),
-        Named(),
-      ],
+      body: IndexedStack(
+        children: <Widget>[
+          Home(),
+          Luck(),
+          Marriage(),
+          Named(),
+        ],
         index: _currentIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: this._currentIndex,
-        onTap: (int index) {
-          setState(() {
-            this._currentIndex = index;
-          });
-        },
+          currentIndex: this._currentIndex,
+          onTap: (int index) {
+            setState(() {
+              this._currentIndex = index;
+            });
+          },
           fixedColor: Colors.brown,
           unselectedItemColor: Colors.grey,
           items: [
@@ -44,78 +66,90 @@ class _TabsState extends State<Tabs> {
               title: Text("首页"),
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.category), title: Text("测运势")),
+                icon: Icon(Icons.category), title: Text("运势")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.pregnant_woman), title: Text("测姻缘")),
+                icon: Icon(Icons.pregnant_woman), title: Text("姻缘")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.border_color), title: Text("起名改名")),
-          ]
-      ),
+                icon: Icon(Icons.border_color), title: Text("起名")),
+          ]),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("小可爱"),
-              accountEmail: Text("10086@qq.com"),
+              accountName: Text("$_name"),
+              accountEmail: Text("$_email"),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
-                ),
+                    "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"),
               ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          image[Random().nextInt(12)]
+                      ),
+                    fit: BoxFit.cover
+                  )),
             ),
             ListTile(
-              leading: Icon(Icons.monetization_on,color: Colors.amber,),
+              leading: Icon(
+                Icons.monetization_on,
+                color: Colors.amber,
+              ),
               title: Text("每日财运"),
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>EveryDayMoney())
-                );
+                    MaterialPageRoute(builder: (context) => EveryDayMoney()));
               },
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.star,color: Colors.pink,),
+              leading: Icon(
+                Icons.star,
+                color: Colors.pink,
+              ),
               title: Text("每日星座"),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.insert_drive_file,color: Colors.brown,),
+              leading: Icon(
+                Icons.insert_drive_file,
+                color: Colors.brown,
+              ),
               title: Text("中国黄历"),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
-
             Divider(),
             ListTile(
-              leading: Icon(Icons.call,color: Colors.deepPurple,),
+              leading: Icon(
+                Icons.call,
+                color: Colors.deepPurple,
+              ),
               title: Text("大师测算"),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
-
             Divider(),
             ListTile(
-              leading: Icon(Icons.settings,color: Colors.deepOrange,),
+              leading: Icon(
+                Icons.settings,
+                color: Colors.deepOrange,
+              ),
               title: Text("设置"),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Setting())
-                );
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Setting()));
               },
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.settings,color: Colors.deepOrange,),
+              leading: Icon(
+                Icons.settings,
+                color: Colors.deepOrange,
+              ),
               title: Text("协议及声明"),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Setting())
-                );
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Setting()));
               },
             ),
             Divider(),

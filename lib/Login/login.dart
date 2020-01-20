@@ -1,6 +1,7 @@
 import 'package:fate/style/MyColor.dart';
 import 'package:fate/tab/Tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -8,6 +9,22 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  SharedPreferences sharedPreferences;
+  String name;
+  String email;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  _sava () async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("name", name);
+    sharedPreferences.setString("email", email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +42,9 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Text("请输入你的姓名"),
                   TextField(
-
+                    onChanged: (names) {
+                      name = names;
+                    },
                   )
                 ],
               ),
@@ -34,7 +53,11 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: <Widget>[
                   Text("请输入你的邮箱"),
-                  TextField(),
+                  TextField(
+                    onChanged: (emails) {
+                      email = emails;
+                    },
+                  ),
                 ],
               ),
             ),
@@ -45,6 +68,9 @@ class _LoginState extends State<Login> {
               height: 60,
               child: RaisedButton(
                   onPressed: () {
+                    print("----------"+name);
+                    print("----------"+email);
+                    _sava();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context)=>Tabs())
                     );

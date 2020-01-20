@@ -164,7 +164,7 @@ class _HomeState extends State<Home> {
                     bottomLeft: Radius.circular(5),
                     bottomRight: Radius.circular(5),
                   ),
-                  color: Colors.green[300],
+                  color: Colors.amber[200],
                 ),
               ),
               Container(
@@ -210,13 +210,13 @@ class _HomeState extends State<Home> {
                         padding: EdgeInsets.all(15),
                         child: Text(color[_colors]["text"],style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: color[_colors][Color],
                           fontSize: 26
                         ),),
                       )
                     ],
                   ),
-                  color: color[_colors][Color],
+
                 ),
               ),
               Container(
@@ -239,16 +239,14 @@ class _HomeState extends State<Home> {
                         padding: EdgeInsets.all(15),
                         child: Text(_colors.toString(),style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: color[_colors][Color],
                           fontSize: 26
                         ),),
                       )
                     ],
                   ),
-                  color: color[_colors][Color],
                 ),
               ),
-
             ],
           ),
         ),
