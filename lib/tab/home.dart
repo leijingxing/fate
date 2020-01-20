@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fate/list/Image.dart';
 import 'package:fate/list/color.dart';
 import 'package:fate/list/text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _year;  //年
+  int _year;   //年
   int _mouth;  //月
   int _day;    //日
   String week; //星期
@@ -30,6 +31,7 @@ class _HomeState extends State<Home> {
     txt = text[_colors];
   }
 
+  // ignore: non_constant_identifier_names
   NumberChange(int i) async {
     switch (i) {
       case 1:
@@ -102,7 +104,7 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
-                          "http://pics.sc.chinaz.com/files/pic/pic9/201806/zzpic12317.jpg",
+                          image[Random().nextInt(12)],
                         ),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(20),
