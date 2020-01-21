@@ -28,6 +28,7 @@ dependencies:
   fluttertoast:
   font_awesome_flutter:
   package_info:
+  flip_card:
 dev_dependencies:
   flutter_test:
     sdk: flutter

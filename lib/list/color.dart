@@ -30,8 +30,8 @@ List color = [
     Color:Color(0xFF00FF00)
   },
   {
-    "text":"浅黄色	",
-    Color:Color(0xFFFFFFE0)
+    "text":"黄",
+    Color:Color(0xFFddff00)
   },
   {
     "text":"橙色",

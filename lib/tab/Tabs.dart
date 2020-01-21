@@ -40,7 +40,7 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("命运检测"),
+        title: Text("fate"),
       ),
       body: IndexedStack(
         children: <Widget>[
@@ -66,7 +66,7 @@ class _TabsState extends State<Tabs> {
               title: Text("首页"),
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.category), title: Text("运势")),
+                icon: Icon(Icons.category), title: Text("祈福")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.pregnant_woman), title: Text("姻缘")),
             BottomNavigationBarItem(
@@ -122,10 +122,10 @@ class _TabsState extends State<Tabs> {
             Divider(),
             ListTile(
               leading: Icon(
-                Icons.call,
+                Icons.all_out,
                 color: Colors.deepPurple,
               ),
-              title: Text("大师测算"),
+              title: Text("祈福广场"),
               onTap: () {},
             ),
             Divider(),
@@ -143,8 +143,8 @@ class _TabsState extends State<Tabs> {
             Divider(),
             ListTile(
               leading: Icon(
-                Icons.settings,
-                color: Colors.deepOrange,
+                Icons.text_fields,
+                color: Colors.red,
               ),
               title: Text("协议及声明"),
               onTap: () {
