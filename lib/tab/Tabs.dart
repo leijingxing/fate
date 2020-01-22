@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:fate/list/Image.dart';
+import 'package:fate/data/Image.dart';
 import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/Setting.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +126,9 @@ class _TabsState extends State<Tabs> {
                 color: Colors.deepPurple,
               ),
               title: Text("祈福广场"),
-              onTap: () {},
+              onTap: () {
+                
+              },
             ),
             Divider(),
             ListTile(

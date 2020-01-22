@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:fate/list/money.dart';
+import 'package:fate/data/money.dart';
 import 'package:flutter/material.dart';
 
 class EveryDayMoney extends StatefulWidget {

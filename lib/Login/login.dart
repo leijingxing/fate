@@ -9,21 +9,50 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
   SharedPreferences sharedPreferences;
   String name;
   String email;
+
+  DateTime _date =  DateTime.now();
+  TimeOfDay _time =  TimeOfDay.now();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
-  _sava () async {
+  _sava() async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("name", name);
     sharedPreferences.setString("email", email);
+  }
+
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(1900, 1),
+        lastDate: DateTime.now());
+    if (picked != null && picked != _date)
+      print("日期选择 :${_date.toString()}");
+    setState(() {
+      _date = picked;
+    });
+
+    if (picked == null) _date =  DateTime.now();
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(context: context, initialTime: _time);
+    if (picked != null && picked != _time)
+      print("时间选择 :${_time.toString()}");
+    setState(() {
+      _time = picked;
+    });
+    if (picked == null) _time =  TimeOfDay.now();
   }
 
   @override
@@ -31,6 +60,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text("注册"),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
@@ -38,7 +69,6 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(bottom: 30),
               child: Column(
                 children: <Widget>[
                   Text("请输入你的姓名"),
@@ -51,6 +81,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             Container(
+              padding: EdgeInsets.only(bottom: 30,top: 30),
               child: Column(
                 children: <Widget>[
                   Text("请输入你的邮箱"),
@@ -64,17 +95,36 @@ class _LoginState extends State<Login> {
             ),
 
             Container(
+              child: Column(
+                children: <Widget>[
+                  Text('出生日期选择'),
+                  RaisedButton(
+                    child:  Text('出生日期:${_date.toString()}'),
+                    onPressed: () {
+                      _selectDate(context);
+                    },
+                  ),
+                  Text('出生时间选择'),
+                  RaisedButton(
+                    child:  Text('出生时间:${_time.toString()}'),
+                    onPressed: () {
+                      _selectTime(context);
+                    },
+                  )
+                ],
+              ),
+            ),
+
+
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(top: 30),
               height: 60,
               child: RaisedButton(
                   onPressed: () {
-                    print("----------"+name);
-                    print("----------"+email);
                     _sava();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=>Tabs())
-                    );
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Tabs()));
                   },
                   color: Colors.brown,
                   shape: RoundedRectangleBorder(
@@ -83,13 +133,10 @@ class _LoginState extends State<Login> {
                   child: Center(
                     child: Text(
                       '确定',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   )),
             ),
-
           ],
         ),
       ),

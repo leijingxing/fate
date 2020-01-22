@@ -15,33 +15,38 @@ class Slpash extends StatefulWidget {
 class _SlpashState extends State<Slpash> {
 
   SharedPreferences sharedPreferences;
-  String _name;
+
+  String _names;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _GetUserInfo();
 
-    Timer(Duration(milliseconds: 200), () {
-      if(_name != "") {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Tabs())
-        );
-      } else {
+    _get();
+
+    Timer(Duration(milliseconds: 500), () {
+      if(_names == null) {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => Login())
         );
+      } else {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => Tabs())
+        );
       }
+
     });
+
+    print("--------------");
+
   }
 
 
-  Future<String> _GetUserInfo() async {
+  _get() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      _name = sharedPreferences.get("name");
-    });
+    String names = sharedPreferences.getString("name");
+    _names = names;
   }
 
 

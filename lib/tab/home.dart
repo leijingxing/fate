@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:fate/list/Image.dart';
-import 'package:fate/list/color.dart';
-import 'package:fate/list/text.dart';
+import 'package:fate/data/Image.dart';
+import 'package:fate/data/color.dart';
+import 'package:fate/data/text.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

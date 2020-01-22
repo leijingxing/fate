@@ -1,5 +1,5 @@
-import 'package:fate/list/LuckData.dart';
-import 'package:fate/list/color.dart';
+import 'package:fate/data/LuckData.dart';
+import 'package:fate/data/color.dart';
 import 'package:fate/page/Pray.dart';
 import 'package:flutter/material.dart';
 
