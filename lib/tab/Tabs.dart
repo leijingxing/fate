@@ -20,7 +20,7 @@ class _TabsState extends State<Tabs> {
   int _currentIndex = 0;
   String _name;
   String _email;
-
+  String _constellation;
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +33,7 @@ class _TabsState extends State<Tabs> {
     setState(() {
       _name = sharedPreferences.get("name");
       _email = sharedPreferences.getString("email");
+      _constellation  = sharedPreferences.getString("constellation");
     });
   }
 
@@ -80,7 +81,8 @@ class _TabsState extends State<Tabs> {
               accountEmail: Text("$_email"),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"),
+                    "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
+                ),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -89,6 +91,14 @@ class _TabsState extends State<Tabs> {
                       ),
                     fit: BoxFit.cover
                   )),
+              onDetailsPressed: () {
+
+              },
+              otherAccountsPictures: <Widget>[
+                Text("$_constellation",style: TextStyle(
+                  color: Colors.white
+                ),)
+              ],
             ),
             ListTile(
               leading: Icon(
@@ -127,7 +137,7 @@ class _TabsState extends State<Tabs> {
               ),
               title: Text("祈福广场"),
               onTap: () {
-                
+
               },
             ),
             Divider(),
