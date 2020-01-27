@@ -1,4 +1,3 @@
-import 'package:fate/style/MyColor.dart';
 import 'package:fate/tab/Tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -185,9 +184,9 @@ class _LoginState extends State<Login> {
               margin: EdgeInsets.only(top: 30),
               child: Column(
                 children: <Widget>[
-                  RaisedButton(
+                  Card(
+                    elevation: 10,
                     child: Text("${getConstellation(_date).toString()}",style: TextStyle(
-                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 24
                     ),),

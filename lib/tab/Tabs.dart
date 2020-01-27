@@ -165,6 +165,19 @@ class _TabsState extends State<Tabs> {
               },
             ),
             Divider(),
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.amberAccent,
+              ),
+              title: Text("推出登陆"),
+              onTap: () {
+                sharedPreferences.clear();
+                Navigator.of(context).pop();
+
+              },
+            ),
+            Divider(),
           ],
         ),
       ),

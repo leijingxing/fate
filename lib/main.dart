@@ -1,8 +1,6 @@
 import 'package:fate/page/Slpash.dart';
-import 'package:fate/tab/Tabs.dart';
 import 'package:flutter/material.dart';
 
-import 'Login/login.dart';
 
 void main() => runApp(MyApp());
 
