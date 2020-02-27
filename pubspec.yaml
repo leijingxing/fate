@@ -29,6 +29,9 @@ dependencies:
   font_awesome_flutter:
   package_info:
   flip_card:
+  dio:
+  http:
+  flutter_spinkit:
 dev_dependencies:
   flutter_test:
     sdk: flutter

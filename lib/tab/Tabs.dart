@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fate/data/Image.dart';
+import 'package:fate/page/DioTest.dart';
 import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/Setting.dart';
 import 'package:flutter/material.dart';
@@ -74,111 +75,123 @@ class _TabsState extends State<Tabs> {
                 icon: Icon(Icons.border_color), title: Text("起名")),
           ]),
       drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text("$_name"),
-              accountEmail: Text("$_email"),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text("$_name"),
+                accountEmail: Text("$_email"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
+                  ),
                 ),
-              ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          image[Random().nextInt(12)]
-                      ),
-                    fit: BoxFit.cover
-                  )),
-              onDetailsPressed: () {
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            image[Random().nextInt(12)]
+                        ),
+                        fit: BoxFit.cover
+                    )),
+                onDetailsPressed: () {
 
-              },
-              otherAccountsPictures: <Widget>[
-                Text("$_constellation",style: TextStyle(
-                  color: Colors.white
-                ),)
-              ],
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.monetization_on,
-                color: Colors.amber,
+                },
+                otherAccountsPictures: <Widget>[
+                  Text("$_constellation",style: TextStyle(
+                      color: Colors.white
+                  ),)
+                ],
               ),
-              title: Text("每日财运"),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => EveryDayMoney()));
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.star,
-                color: Colors.pink,
+              ListTile(
+                leading: Icon(
+                  Icons.monetization_on,
+                  color: Colors.amber,
+                ),
+                title: Text("每日财运"),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => EveryDayMoney()));
+                },
               ),
-              title: Text("每日星座"),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.insert_drive_file,
-                color: Colors.brown,
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.star,
+                  color: Colors.pink,
+                ),
+                title: Text("每日星座"),
+                onTap: () {},
               ),
-              title: Text("中国黄历"),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.all_out,
-                color: Colors.deepPurple,
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.insert_drive_file,
+                  color: Colors.brown,
+                ),
+                title: Text("中国黄历"),
+                onTap: () {},
               ),
-              title: Text("祈福广场"),
-              onTap: () {
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.all_out,
+                  color: Colors.deepPurple,
+                ),
+                title: Text("祈福广场"),
+                onTap: () {
 
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Colors.deepOrange,
+                },
               ),
-              title: Text("设置"),
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Setting()));
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.text_fields,
-                color: Colors.red,
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.deepOrange,
+                ),
+                title: Text("设置"),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Setting()));
+                },
               ),
-              title: Text("协议及声明"),
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Setting()));
-              },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: Colors.amberAccent,
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.text_fields,
+                  color: Colors.red,
+                ),
+                title: Text("协议及声明"),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Setting()));
+                },
               ),
-              title: Text("推出登陆"),
-              onTap: () {
-                sharedPreferences.clear();
-                Navigator.of(context).pop();
-
-              },
-            ),
-            Divider(),
-          ],
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.amberAccent,
+                ),
+                title: Text("推出登陆"),
+                onTap: () {
+                  sharedPreferences.clear();
+                  Navigator.of(context).pop();
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.star_half,
+                  color: Colors.amberAccent,
+                ),
+                title: Text("笑话"),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => DioTest()));
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
