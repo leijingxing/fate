@@ -32,6 +32,9 @@ dependencies:
   dio:
   http:
   flutter_spinkit:
+  video_player:
+  flutter_simple_video_player:
+  chewie:
 dev_dependencies:
   flutter_test:
     sdk: flutter

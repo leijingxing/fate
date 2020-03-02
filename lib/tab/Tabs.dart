@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:fate/data/Image.dart';
-import 'package:fate/page/DioTest.dart';
+import 'package:fate/page/Daily.dart';
+import 'package:fate/page/VidioPage.dart';
+import 'package:fate/page/XiaoHua.dart';
 import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/Setting.dart';
+import 'package:fate/page/joke_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Luck.dart';
@@ -119,8 +122,11 @@ class _TabsState extends State<Tabs> {
                   Icons.star,
                   color: Colors.pink,
                 ),
-                title: Text("每日星座"),
-                onTap: () {},
+                title: Text("视频"),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Vidio()));
+                },
               ),
               Divider(),
               ListTile(
@@ -128,8 +134,11 @@ class _TabsState extends State<Tabs> {
                   Icons.insert_drive_file,
                   color: Colors.brown,
                 ),
-                title: Text("中国黄历"),
-                onTap: () {},
+                title: Text("段子图片"),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => jokephoto()));
+                },
               ),
               Divider(),
               ListTile(
@@ -137,9 +146,10 @@ class _TabsState extends State<Tabs> {
                   Icons.all_out,
                   color: Colors.deepPurple,
                 ),
-                title: Text("祈福广场"),
+                title: Text("前端日报"),
                 onTap: () {
-
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Daily()));
                 },
               ),
               Divider(),
