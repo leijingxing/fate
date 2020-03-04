@@ -1,9 +1,15 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
+import 'package:fate/bean/HuangLi.dart';
+import 'package:fate/bean/ToDayUser.dart';
 import 'package:fate/data/Image.dart';
 import 'package:fate/data/color.dart';
 import 'package:fate/data/text.dart';
+import 'package:fate/page/TodayHistory.dart';
+import 'package:fate/page/TodayHistoryPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,13 +17,46 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _year;   //年
-  int _mouth;  //月
-  int _day;    //日
+  int _year; //年
+  int _mouth; //月
+  int _day; //日
   String week; //星期
 
   int _colors = Random().nextInt(12); //不超过12的随机数
   String txt;
+  HuangLi huangLi;
+
+  List<Todayuser> _listtoday = new List<Todayuser>();
+
+  void GetHuangLi() async {
+    try {
+      Response response = await Dio().get(
+          "http://v.juhe.cn/laohuangli/d?date=$_year-$_mouth-$_day&key=357f2ba4a5847632af01a23ccefb4af6");
+      huangLi = new HuangLi(response.data);
+      setState(() {
+
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void GetToDay() async {
+    try {
+      Response response = await Dio().get(
+          "http://v.juhe.cn/todayOnhistory/queryEvent.php?date=$_mouth/$_day&key=2ed1ffc7a5edcaa5598a7aeb3e648d8e");
+      ToDay toDay = new ToDay(response.data);
+      _listtoday.addAll(toDay.result);
+
+      setState(() {
+
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 
   @override
   void initState() {
@@ -27,6 +66,8 @@ class _HomeState extends State<Home> {
     _year = DateTime.now().year;
     _mouth = DateTime.now().month;
     _day = DateTime.now().day;
+    GetToDay();
+    GetHuangLi();
     NumberChange(DateTime.now().weekday);
     txt = text[_colors];
   }
@@ -61,7 +102,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: body(),
+    );
+  }
+
+
+  Widget body() {
+    if(_listtoday.length > 0) {
+      return SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(10),
           child: Column(
@@ -72,19 +120,14 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "$_year",
+                      "$_year年 $_mouth月",
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    Text(
-                      "$_mouth月",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
+
+
                     Text(
                       "$_day",
                       style: TextStyle(
@@ -99,6 +142,13 @@ class _HomeState extends State<Home> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
+                    Text(
+                      "${huangLi.result.yinli}",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -124,9 +174,11 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      child: Text(
-                        "破土　修坟　纳采　祭祀　修造　盖屋　动土  竖柱",
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          "${huangLi.result.yi}",
+                        ),
                       ),
                     ),
                   ],
@@ -152,9 +204,11 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Container(
-                      child: Text(
-                        "入学　裁衣　立券　求财",
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          "${huangLi.result.ji}",
+                        ),
                       ),
                     ),
                   ],
@@ -175,16 +229,25 @@ class _HomeState extends State<Home> {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579449840885&di=de0efd26d32cb5e6aba53ab35cf097e4&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Fbmiddle%2Fa4aae570jw1eu0q31i5iej20c60b9wek.jpg",
+                              "http://pics.sc.chinaz.com/files/pic/pic9/201903/zzpic17279.jpg"),
+                        ),
+                        title: Text(
+                          "拜祭",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
                           ),
                         ),
-                        title: Text("今日运势",style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),),
                       ),
                       Container(
                         padding: EdgeInsets.all(15),
-                        child: Text(txt),
+                        child: Text(
+                          '${huangLi.result.baiji}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: color[_colors][Color],
+                              fontSize: 20),
+                        ),
                       )
                     ],
                   ),
@@ -198,59 +261,156 @@ class _HomeState extends State<Home> {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            "http://pics.sc.chinaz.com/files/pic/pic9/201911/zzpic21499.jpg"
+                              "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4294289034,418681099&fm=26&gp=0.jpg"),
+                        ),
+                        title: Text(
+                          "五行",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
                           ),
                         ),
-                        title: Text("幸运颜色",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),),
                       ),
                       Container(
                         padding: EdgeInsets.all(15),
-                        child: Text(color[_colors]["text"],style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: color[_colors][Color],
-                          fontSize: 26
-                        ),),
+                        child: Text(
+                          '${huangLi.result.wuxing}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: color[_colors][Color],
+                              fontSize: 20),
+                        ),
                       )
                     ],
                   ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=38163796,2230922536&fm=26&gp=0.jpg"),
+                        ),
+                        title: Text(
+                          "冲煞",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          '${huangLi.result.chongsha}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: color[_colors][Color],
+                              fontSize: 20),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Todayhistory()
 
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Card(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "http://pics.sc.chinaz.com/files/pic/pic9/201911/zzpic21394.jpg"
-                          ),
-                        ),
-                        title: Text("幸运数字",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        child: Text(_colors.toString(),style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: color[_colors][Color],
-                          fontSize: 26
-                        ),),
-                      )
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SpinKitChasingDots(
+        color: Colors.greenAccent,
+      );
+    }
   }
+
+  Widget Todayhistory() {
+    if(_listtoday.length > 1) {
+      return Container(
+        margin: EdgeInsets.only(top: 20),
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "http://pics.sc.chinaz.com/files/pic/pic9/202001/zzpic22526.jpg",
+                  ),
+                ),
+                title: Text(
+                  "历史上的今天",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context)=>TodayHistoryPage(
+                          _listtoday
+                      ))
+                  );
+                },
+              ),
+              Container(
+                child: ListTile(
+                  title: Text("${_listtoday[0].title}",),
+                  subtitle: Text("${_listtoday[0].date}",),
+                  trailing: Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context)=>TodayHistory(
+                            _listtoday[0].e_id,
+                            _listtoday[0].title
+                        ))
+                    );
+                  },
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  title: Text("${_listtoday[1].title}",),
+                  subtitle: Text("${_listtoday[1].date}",),
+                  trailing: Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context)=>TodayHistory(
+                            _listtoday[1].e_id,
+                            _listtoday[1].title
+                        ))
+                    );
+                  },
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  title: Text("更多",),
+                  trailing: Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context)=>TodayHistoryPage(
+                            _listtoday,
+                        ))
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      return SpinKitChasingDots(
+        color: Colors.greenAccent,
+      );
+    }
+  }
+
 }

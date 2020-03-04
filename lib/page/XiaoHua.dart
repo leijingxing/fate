@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
@@ -11,18 +12,19 @@ class DioTest extends StatefulWidget {
 }
 
 class _DioTestState extends State<DioTest> {
+  ScrollController scrollController = new ScrollController();
   int _page = 1;
   String str = '';
   List<User2> list2 = new List<User2>();
 
   List<Color> bgcolors = [
-    Color(0xFF7B26FF),
+    Color(0xFF7Ba6F4),
     Colors.greenAccent,
     Colors.pink,
     Color(0xFFFF7F00),
     Color(0xFFD15FEE),
     Color(0xFFffee93),
-    Color(0xFF9A32CD),
+    Color(0xFF9Aa2CD),
     Color(0xFFa3a380),
     Color(0xFFfA32aD),
 
@@ -39,10 +41,13 @@ class _DioTestState extends State<DioTest> {
   void getHttp1() async {
     try {
       Response response = await Dio().get(
-          "http://api.jisuapi.com/xiaohua/text?pagenum=$_page&pagesize=20&sort=addtime&appkey=f898445e12d9ece2");
+          "http://api.jisuapi.com/xiaohua/text?pagenum=$_page&pagesize=20&sort=rand&appkey=f898445e12d9ece2");
       User user = new User((response.data));
       list2.addAll(user.result.list);
-      setState(() {});
+
+      setState(() {
+        scrollController.jumpTo(0);
+      });
     } catch (e) {
       print(e);
     }
@@ -54,12 +59,12 @@ class _DioTestState extends State<DioTest> {
       appBar: AppBar(
         title: Text("笑话"),
         actions: <Widget>[
-          RaisedButton(
-            child: Icon(
+          IconButton(
+            icon: Icon(
               Icons.chevron_right,
-              color: Colors.red,
+              color: Colors.white,
             ),
-            shape: CircleBorder(),
+            iconSize: 50,
             onPressed: () {
               _page++;
               list2.clear();
@@ -75,6 +80,7 @@ class _DioTestState extends State<DioTest> {
   Widget body() {
     if (list2.length > 0) {
       return ListView.builder(
+        controller: scrollController,
         itemCount: list2.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
