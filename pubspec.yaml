@@ -35,6 +35,8 @@ dependencies:
   video_player:
   flutter_simple_video_player:
   chewie:
+  flutter_webview_plugin: ^0.3.10+1
+  image_picker:
 dev_dependencies:
   flutter_test:
     sdk: flutter

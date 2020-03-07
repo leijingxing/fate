@@ -1,3 +1,4 @@
+import 'package:fate/data/MyColors.dart';
 import 'package:fate/page/Slpash.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primarySwatch: MyColor.zhutise,
+        primaryColor: MyColor.zhutise1
       ),
       home: Slpash(),
     );

@@ -27,18 +27,19 @@ class _SlpashState extends State<Slpash> {
 
     Timer(Duration(milliseconds: 500), () {
       if(_names == null) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Login())
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Login()),
+                (route) => route == null
         );
       } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Tabs())
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Tabs()),
+                (route) => route == null
         );
       }
 
     });
 
-    print("--------------");
 
   }
 

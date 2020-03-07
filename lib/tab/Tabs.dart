@@ -1,17 +1,12 @@
-import 'dart:math';
-
-import 'package:fate/data/Image.dart';
-import 'package:fate/page/Daily.dart';
-import 'package:fate/page/VidioPage.dart';
-import 'package:fate/page/XiaoHua.dart';
-import 'package:fate/page/EveryDayMoney.dart';
-import 'package:fate/page/Setting.dart';
-import 'package:fate/page/joke_photo.dart';
+import 'package:fate/data/MyColors.dart';
+import 'package:fate/tab/Drawer.dart';
+import 'package:fate/tab/TouTiaoNews.dart';
+import 'package:fate/tab/WeChatPage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Luck.dart';
-import 'Marriage.dart';
-import 'Named.dart';
+
+import '../page/Luck.dart';
 import 'home.dart';
 
 class Tabs extends StatefulWidget {
@@ -22,37 +17,16 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   SharedPreferences sharedPreferences;
   int _currentIndex = 0;
-  String _name;
-  String _email;
-  String _constellation;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _GetUserInfo();
-  }
-
-  Future<String> _GetUserInfo() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      _name = sharedPreferences.get("name");
-      _email = sharedPreferences.getString("email");
-      _constellation  = sharedPreferences.getString("constellation");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("fate"),
-      ),
+
       body: IndexedStack(
         children: <Widget>[
           Home(),
           Luck(),
-          Marriage(),
-          Named(),
+          TouTiaoNews(),
+          WeChatPage(),
         ],
         index: _currentIndex,
       ),
@@ -63,7 +37,7 @@ class _TabsState extends State<Tabs> {
               this._currentIndex = index;
             });
           },
-          fixedColor: Colors.brown,
+          fixedColor: MyColor.zhutise1,
           unselectedItemColor: Colors.grey,
           items: [
             BottomNavigationBarItem(
@@ -73,136 +47,12 @@ class _TabsState extends State<Tabs> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.category), title: Text("祈福")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.pregnant_woman), title: Text("姻缘")),
+                icon: Icon(FontAwesomeIcons.newspaper), title: Text("头条")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.border_color), title: Text("起名")),
+                icon: Icon(FontAwesomeIcons.weixin), title: Text("精选")),
           ]),
       drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountName: Text("$_name"),
-                accountEmail: Text("$_email"),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "http://pic2.sc.chinaz.com/Files/pic/pic9/201912/zzpic22199.jpg"
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            image[Random().nextInt(12)]
-                        ),
-                        fit: BoxFit.cover
-                    )),
-                onDetailsPressed: () {
-
-                },
-                otherAccountsPictures: <Widget>[
-                  Text("$_constellation",style: TextStyle(
-                      color: Colors.white
-                  ),)
-                ],
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.monetization_on,
-                  color: Colors.amber,
-                ),
-                title: Text("每日财运"),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => EveryDayMoney()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.star,
-                  color: Colors.pink,
-                ),
-                title: Text("视频"),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Vidio()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.insert_drive_file,
-                  color: Colors.brown,
-                ),
-                title: Text("段子图片"),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => jokephoto()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.all_out,
-                  color: Colors.deepPurple,
-                ),
-                title: Text("前端日报"),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Daily()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                  color: Colors.deepOrange,
-                ),
-                title: Text("设置"),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Setting()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.text_fields,
-                  color: Colors.red,
-                ),
-                title: Text("协议及声明"),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Setting()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.amberAccent,
-                ),
-                title: Text("推出登陆"),
-                onTap: () {
-                  sharedPreferences.clear();
-                  Navigator.of(context).pop();
-                },
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.star_half,
-                  color: Colors.amberAccent,
-                ),
-                title: Text("笑话"),
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => DioTest()));
-                },
-              ),
-            ],
-          ),
-        ),
+        child: DrawerPage(),
       ),
     );
   }

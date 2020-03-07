@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:fate/tab/Tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -15,6 +18,8 @@ class _LoginState extends State<Login> {
   String constellation;
   DateTime _date =  DateTime.now();
   TimeOfDay _time =  TimeOfDay.now();
+
+  List<File> _imageFile = [];
 
   @override
   void initState() {
@@ -46,7 +51,6 @@ class _LoginState extends State<Login> {
     if (picked == null) _date = DateTime.now();
 
     constellation = getConstellation(picked).toString();
-    print("------------"+getConstellation(picked).toString());
 
   }
 
@@ -129,96 +133,175 @@ class _LoginState extends State<Login> {
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Text("请输入你的姓名"),
-                  TextField(
-                    onChanged: (names) {
-                      name = names;
-                    },
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 30,top: 30),
-              child: Column(
-                children: <Widget>[
-                  Text("请输入你的邮箱"),
-                  TextField(
-                    onChanged: (emails) {
-                      email = emails;
-                    },
-                  ),
-                ],
-              ),
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
 
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Text('出生日期选择'),
-                  RaisedButton(
-                    child:  Text('出生日期:${_date.toString()}'),
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                  ),
-                  Text('出生时间选择'),
-                  RaisedButton(
-                    child:  Text('出生时间:${_time.toString()}'),
-                    onPressed: () {
-                      _selectTime(context);
-                    },
-                  )
-                ],
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Text("请输入你的姓名"),
+                    TextField(
+                      onChanged: (names) {
+                        name = names;
+                      },
+                    )
+                  ],
+                ),
               ),
-            ),
-
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Column(
-                children: <Widget>[
-                  Card(
-                    elevation: 10,
-                    child: Text("${getConstellation(_date).toString()}",style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24
-                    ),),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(top: 30),
-              height: 60,
-              child: RaisedButton(
-                  onPressed: () {
-                    _sava();
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Tabs()));
-                  },
-                  color: Colors.brown,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular((30)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '确定',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+              Container(
+                padding: EdgeInsets.only(bottom: 30,top: 30),
+                child: Column(
+                  children: <Widget>[
+                    Text("请输入你的邮箱"),
+                    TextField(
+                      onChanged: (emails) {
+                        email = emails;
+                      },
                     ),
-                  )),
-            ),
-          ],
+                  ],
+                ),
+              ),
+
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Text('出生日期选择'),
+                    RaisedButton(
+                      child:  Text('出生日期:${_date.toString()}'),
+                      onPressed: () {
+                        _selectDate(context);
+                      },
+                    ),
+                    Text('出生时间选择'),
+                    RaisedButton(
+                      child:  Text('出生时间:${_time.toString()}'),
+                      onPressed: () {
+                        _selectTime(context);
+                      },
+                    )
+                  ],
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.only(top: 30),
+                child: Column(
+                  children: <Widget>[
+                    Text("${getConstellation(_date).toString()}",style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24
+                    ),),
+
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 30),
+                height: 60,
+                child: RaisedButton(
+                    onPressed: () {
+                      _sava();
+                      Navigator.of(context)
+                          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Tabs()),
+                              (route) => route == null
+                      );
+
+                    },
+                    color: Colors.brown,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular((30)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '确定',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+
+  void geticon(int i) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => Container(
+            height: 140,
+            padding: EdgeInsets.only(bottom: 10),
+            child: Column(children: <Widget>[
+              InkWell(
+                  child: Container(
+                      alignment: Alignment.center,
+                      height: 60.0,
+                      child: Text(
+                        'Camera',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Schyler_medium',
+                            color: Colors.black),
+                      )),
+                  onTap: () {
+                    getCamera(i);
+                  }),
+              Container(
+                height: 0.2,
+                color: Color(0xFFfc3973),
+              ),
+              InkWell(
+                child: Container(
+                    alignment: Alignment.center,
+                    height: 60.0,
+                    child: Text(
+                      'Gallery',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Schyler_medium',
+                          color: Colors.black),
+                    )),
+                onTap: (){
+                  getGallery(i);
+                },
+              )
+            ])));
+  }
+
+  Future getCamera(int i) async {
+    Navigator.pop(context);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setState(() {
+        _imageFile.add(image);
+      });
+    }
+  }
+
+  Future getGallery(int i) async {
+    Navigator.pop(context);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _imageFile.add(image);
+      }
+      );
+    }
+  }
+
+  ImageProvider imagess(int i) {
+    if (_imageFile.length<i+ 1) {
+      return AssetImage('images/add.png'
+      );
+    } else {
+      return FileImage(_imageFile[i]);
+    }
+  }
+
 }
