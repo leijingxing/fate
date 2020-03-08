@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:fate/bean/Toutiao.dart';
+import 'package:fate/data/MyColors.dart';
 import 'package:fate/page/webView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'Drawer.dart';
 
 class TouTiaoNews extends StatefulWidget {
   @override
@@ -15,10 +18,12 @@ class _TouTiaoNewsState extends State<TouTiaoNews> {
 
   String _type = 'top';
   List<TouTiaouser> _list = new List<TouTiaouser>();
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
 
   void GetNews() async {
     try {
-      Response response = await Dio().get(
+      Response response = await Dio().post(
           "http://v.juhe.cn/toutiao/index?type=$_type&key=59ad2dd0e1049ce800a53945a407d8b5");
       Toutiao _toutiao = new Toutiao(response.data);
       _list.clear();
@@ -51,8 +56,17 @@ class _TouTiaoNewsState extends State<TouTiaoNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKey,
       appBar: AppBar(
         title: Text('头条'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.list,
+          ),
+          onPressed: () {
+            this._globalKey.currentState.openDrawer();
+          },
+        ),
         actions: <Widget>[
            IconButton(
              icon: PopupMenuButton(
@@ -227,14 +241,19 @@ class _TouTiaoNewsState extends State<TouTiaoNews> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: body(),
+      body: RefreshIndicator(
+        color: MyColor.zhutise1,
+        onRefresh: _refreshData,
+        child: body(),
+      ),
+      drawer: Drawer(
+        child: DrawerPage(),
+      ),
       floatingActionButton: FloatingActionButton(
-        child: IconButton(
-          icon: Icon(Icons.autorenew),
-          onPressed: () {
-            GetNews();
-          },
-        ),
+        child:  Icon(Icons.autorenew),
+        onPressed: () {
+          GetNews();
+        },
       ),
     );
   }
@@ -283,6 +302,10 @@ class _TouTiaoNewsState extends State<TouTiaoNews> {
     }
   }
 
-
+  Future<Null> _refreshData() async {
+    await Future.delayed(Duration(seconds: 0)).then((e) {
+      GetNews();
+    });
+  }
 
 }

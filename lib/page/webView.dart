@@ -1,3 +1,4 @@
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +29,14 @@ class _WebViewPageState extends State<WebViewPage> {
                 Navigator.of(context).pop();
               },
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  Share.text(title, weburl, 'text/plain');
+                },
+              )
+            ],
           ),
         );
 

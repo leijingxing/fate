@@ -19,41 +19,62 @@ class _TabsState extends State<Tabs> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        body: IndexedStack(
+          children: <Widget>[
+            Home(),
+            Luck(),
+            TouTiaoNews(),
+            WeChatPage(),
+          ],
+          index: _currentIndex,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: this._currentIndex,
+            onTap: (int index) {
+              setState(() {
+                this._currentIndex = index;
+              });
+            },
+            fixedColor: MyColor.zhutise1,
+            unselectedItemColor: Colors.grey,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                title: Text("首页"),
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.category), title: Text("祈福")),
+              BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.newspaper), title: Text("头条")),
+              BottomNavigationBarItem(
+                  icon: Icon(FontAwesomeIcons.weixin), title: Text("精选")),
+            ]),
 
-      body: IndexedStack(
-        children: <Widget>[
-          Home(),
-          Luck(),
-          TouTiaoNews(),
-          WeChatPage(),
-        ],
-        index: _currentIndex,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: this._currentIndex,
-          onTap: (int index) {
-            setState(() {
-              this._currentIndex = index;
-            });
-          },
-          fixedColor: MyColor.zhutise1,
-          unselectedItemColor: Colors.grey,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("首页"),
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.category), title: Text("祈福")),
-            BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.newspaper), title: Text("头条")),
-            BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.weixin), title: Text("精选")),
-          ]),
-      drawer: Drawer(
-        child: DrawerPage(),
       ),
     );
   }
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              title: Text('确定退出程序吗?'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('暂不'),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                FlatButton(
+                  child: Text('确定'),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+              ],
+            ));
+  }
+
+
 }

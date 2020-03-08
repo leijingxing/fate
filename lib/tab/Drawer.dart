@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fate/data/Image.dart';
 import 'package:fate/data/MyColors.dart';
+import 'package:fate/page/ChengYuPage.dart';
 import 'package:fate/page/DiangShangBook.dart';
 import 'package:fate/page/EveryDayMoney.dart';
 import 'package:fate/page/PhoneNumber.dart';
@@ -22,7 +23,6 @@ class _DrawerPageState extends State<DrawerPage> {
 
 
   SharedPreferences sharedPreferences;
-  int _currentIndex = 0;
   String _name;
   String _email;
   String _constellation;
@@ -68,7 +68,8 @@ class _DrawerPageState extends State<DrawerPage> {
             otherAccountsPictures: <Widget>[
               Text("$_constellation",style: TextStyle(
                   color: Colors.white
-              ),)
+              ),),
+
             ],
           ),
           ListTile(
@@ -82,30 +83,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   MaterialPageRoute(builder: (context) => EveryDayMoney()));
             },
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(
-              Icons.star,
-              color: Colors.pink,
-            ),
-            title: Text("头条"),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => TouTiaoNews()));
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(
-              Icons.insert_drive_file,
-              color: Colors.brown,
-            ),
-            title: Text("微信精选"),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => WeChatPage()));
-            },
-          ),
+
           Divider(),
           ListTile(
             leading: Icon(
@@ -133,13 +111,25 @@ class _DrawerPageState extends State<DrawerPage> {
           Divider(),
           ListTile(
             leading: Icon(
-              Icons.star_half,
+              FontAwesomeIcons.smile,
               color: Colors.amberAccent,
             ),
             title: Text("笑话"),
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => DioTest()));
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.book,
+              color: Colors.pink,
+            ),
+            title: Text("成语词典"),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ChengYuPage()));
             },
           ),
           Divider(),

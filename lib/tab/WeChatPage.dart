@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'Drawer.dart';
+
 class WeChatPage extends StatefulWidget {
   @override
   _WeChatPageState createState() => _WeChatPageState();
@@ -17,6 +19,9 @@ class _WeChatPageState extends State<WeChatPage> {
   int _page=1;   //页数
   int _ps = 50;  //返回条数
   List<wechatuser> _list = new List<wechatuser>();
+
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
 
   void GetWeChat() async {
     try {
@@ -42,9 +47,18 @@ class _WeChatPageState extends State<WeChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKey,
       appBar: AppBar(
         title: Text('微信精选'),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.list,
+          ),
+          onPressed: () {
+            this._globalKey.currentState.openDrawer();
+          },
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.autorenew,color: Colors.white,),
@@ -56,6 +70,9 @@ class _WeChatPageState extends State<WeChatPage> {
         ],
       ),
       body: body(),
+      drawer: Drawer(
+        child: DrawerPage(),
+      ),
     );
   }
 

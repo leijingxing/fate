@@ -4,12 +4,15 @@ import 'package:dio/dio.dart';
 import 'package:fate/bean/HuangLi.dart';
 import 'package:fate/bean/ToDayUser.dart';
 import 'package:fate/data/Image.dart';
+import 'package:fate/data/MyColors.dart';
 import 'package:fate/data/color.dart';
 import 'package:fate/data/text.dart';
 import 'package:fate/page/TodayHistory.dart';
 import 'package:fate/page/TodayHistoryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'Drawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -27,6 +30,7 @@ class _HomeState extends State<Home> {
   HuangLi huangLi;
 
   List<Todayuser> _listtoday = new List<Todayuser>();
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
   void GetHuangLi() async {
     try {
@@ -43,7 +47,7 @@ class _HomeState extends State<Home> {
 
   void GetToDay() async {
     try {
-      Response response = await Dio().get(
+      Response response = await Dio().post(
           "http://v.juhe.cn/todayOnhistory/queryEvent.php?date=$_mouth/$_day&key=2ed1ffc7a5edcaa5598a7aeb3e648d8e");
       ToDay toDay = new ToDay(response.data);
       _listtoday.addAll(toDay.result);
@@ -102,7 +106,28 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKey,
+      appBar: AppBar(
+        title: Text(
+          "Date",
+
+        ),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.list,
+          ),
+          onPressed: () {
+            this._globalKey.currentState.openDrawer();
+          },
+        ),
+
+      ),
       body: body(),
+      drawer: Drawer(
+        child: DrawerPage(),
+      ),
     );
   }
 
@@ -158,7 +183,7 @@ class _HomeState extends State<Home> {
                         ),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.brown),
+                    color: MyColor.zhutise1),
               ),
               Container(
                 margin: EdgeInsets.only(top: 30),

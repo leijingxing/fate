@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fate/Login/login.dart';
-import 'package:fate/style/MyColor.dart';
+import 'package:fate/data/MyColors.dart';
 import 'package:fate/tab/Tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,70 +1,48 @@
 import 'dart:convert' show json;
 
-class User {
+class XiaoHua {
 
-  int status;
-  String msg;
-  User1 result;
+  int error_code;
+  String reason;
+  List<xiahua> result;
 
-  User.fromParams({this.status, this.msg, this.result});
+  XiaoHua.fromParams({this.error_code, this.reason, this.result});
 
-  factory User(jsonStr) => jsonStr == null ? null : jsonStr is String ? new User.fromJson(json.decode(jsonStr)) : new User.fromJson(jsonStr);
+  factory XiaoHua(jsonStr) => jsonStr == null ? null : jsonStr is String ? new XiaoHua.fromJson(json.decode(jsonStr)) : new XiaoHua.fromJson(jsonStr);
 
-  User.fromJson(jsonRes) {
-    status = jsonRes['status'];
-    msg = jsonRes['msg'];
-    result = jsonRes['result'] == null ? null : new User1.fromJson(jsonRes['result']);
-  }
+  XiaoHua.fromJson(jsonRes) {
+    error_code = jsonRes['error_code'];
+    reason = jsonRes['reason'];
+    result = jsonRes['result'] == null ? null : [];
 
-  @override
-  String toString() {
-    return '{"status": $status,"msg": ${msg != null?'${json.encode(msg)}':'null'},"result": $result}';
-  }
-}
-
-class User1 {
-
-  int pagenum;
-  int pagesize;
-  int total;
-  List<User2> list;
-
-  User1.fromParams({this.pagenum, this.pagesize, this.total, this.list});
-
-  User1.fromJson(jsonRes) {
-    pagenum = jsonRes['pagenum'];
-    pagesize = jsonRes['pagesize'];
-    total = jsonRes['total'];
-    list = jsonRes['list'] == null ? null : [];
-
-    for (var listItem in list == null ? [] : jsonRes['list']){
-      list.add(listItem == null ? null : new User2.fromJson(listItem));
+    for (var resultItem in result == null ? [] : jsonRes['result']){
+      result.add(resultItem == null ? null : new xiahua.fromJson(resultItem));
     }
   }
 
   @override
   String toString() {
-    return '{"pagenum": $pagenum,"pagesize": $pagesize,"total": $total,"list": $list}';
+    return '{"error_code": $error_code,"reason": ${reason != null?'${json.encode(reason)}':'null'},"result": $result}';
   }
 }
 
-class User2 {
+class xiahua {
 
-  String addtime;
+  int unixtime;
   String content;
-  String url;
+  String hashId;
 
-  User2.fromParams({this.addtime, this.content, this.url});
+  xiahua.fromParams({this.unixtime, this.content, this.hashId});
 
-  User2.fromJson(jsonRes) {
-    addtime = jsonRes['addtime'];
+  xiahua.fromJson(jsonRes) {
+    unixtime = jsonRes['unixtime'];
     content = jsonRes['content'];
-    url = jsonRes['url'];
+    hashId = jsonRes['hashId'];
   }
 
   @override
   String toString() {
-    return '{"addtime": ${addtime != null?'${json.encode(addtime)}':'null'},"content": ${content != null?'${json.encode(content)}':'null'},"url": ${url != null?'${json.encode(url)}':'null'}}';
+    return '{"unixtime": $unixtime,"content": ${content != null?'${json.encode(content)}':'null'},"hashId": ${hashId != null?'${json.encode(hashId)}':'null'}}';
   }
 }
 
