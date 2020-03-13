@@ -109,8 +109,7 @@ class _HomeState extends State<Home> {
       key: _globalKey,
       appBar: AppBar(
         title: Text(
-          "Date",
-
+          "home",
         ),
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -122,7 +121,14 @@ class _HomeState extends State<Home> {
             this._globalKey.currentState.openDrawer();
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.perm_contact_calendar),
+            onPressed: () {
 
+            },
+          )
+        ],
       ),
       body: body(),
       drawer: Drawer(
@@ -257,7 +263,7 @@ class _HomeState extends State<Home> {
                               "http://pics.sc.chinaz.com/files/pic/pic9/201903/zzpic17279.jpg"),
                         ),
                         title: Text(
-                          "拜祭",
+                          "彭祖百忌",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,

@@ -46,7 +46,7 @@ class _TabsState extends State<Tabs> {
                 title: Text("首页"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.category), title: Text("祈福")),
+                  icon: Icon(FontAwesomeIcons.americanSignLanguageInterpreting), title: Text("星座配对")),
               BottomNavigationBarItem(
                   icon: Icon(FontAwesomeIcons.newspaper), title: Text("头条")),
               BottomNavigationBarItem(

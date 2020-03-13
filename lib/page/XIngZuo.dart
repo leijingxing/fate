@@ -1,18 +1,18 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
-class Pray extends StatefulWidget {
+class XingZuo extends StatefulWidget {
   String title;
   Color color;
-  Pray({this.title,this.color});
+  XingZuo({this.title,this.color});
   @override
-  _PrayState createState() => _PrayState(title: title,color: color);
+  _XingZuoState createState() => _XingZuoState(title: title,color: color);
 }
 
-class _PrayState extends State<Pray> {
+class _XingZuoState extends State<XingZuo> {
   String title;
   Color color;
-  _PrayState({this.title,this.color});
+  _XingZuoState({this.title,this.color});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
