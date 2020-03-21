@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fate/bean/PhoneNumberbean.dart';
+import 'package:fate/data/MyColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -54,14 +55,23 @@ class _PhoneNumberState extends State<PhoneNumber> {
                 print(_phonenumber);
               },
             ),
-            RaisedButton(
-              child: Text("确定"),
-              onPressed: () {
-                if(_phonenumber==null) {
-                  Fluttertoast.showToast(msg: "请输入手机号码");
-                }
-                GetPhone();
-              },
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: RaisedButton(
+                child: Text("确定",style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                )),
+                color: MyColor.zhutise1,
+                shape: StadiumBorder(),
+                onPressed: () {
+                  if(_phonenumber==null) {
+                    Fluttertoast.showToast(msg: "请输入手机号码");
+                  }
+                  GetPhone();
+                },
+              ),
             ),
             card()
           ],
@@ -86,7 +96,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
               trailing: Text("${_phone.city}"),
             ),
             ListTile(
-              leading: Text("邮政编码"),
+              leading: Text("区号"),
               trailing: Text("${_phone.areacode}"),
             ),
             ListTile(

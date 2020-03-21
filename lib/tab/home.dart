@@ -7,10 +7,12 @@ import 'package:fate/data/Image.dart';
 import 'package:fate/data/MyColors.dart';
 import 'package:fate/data/color.dart';
 import 'package:fate/data/text.dart';
+import 'package:fate/page/Chat.dart';
 import 'package:fate/page/TodayHistory.dart';
 import 'package:fate/page/TodayHistoryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'Drawer.dart';
 
@@ -59,8 +61,6 @@ class _HomeState extends State<Home> {
       print(e);
     }
   }
-
-
 
   @override
   void initState() {
@@ -123,9 +123,11 @@ class _HomeState extends State<Home> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.perm_contact_calendar),
+            icon: SvgPicture.asset('svg/liaotian.svg',color: Colors.white,),
             onPressed: () {
-
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context)=>Chat())
+              );
             },
           )
         ],
@@ -188,7 +190,7 @@ class _HomeState extends State<Home> {
                           image[Random().nextInt(12)],
                         ),
                         fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     color: MyColor.zhutise1),
               ),
               Container(

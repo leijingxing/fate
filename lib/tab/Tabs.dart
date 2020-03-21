@@ -3,11 +3,15 @@ import 'package:fate/tab/Drawer.dart';
 import 'package:fate/tab/TouTiaoNews.dart';
 import 'package:fate/tab/WeChatPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../page/Luck.dart';
 import 'home.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 class Tabs extends StatefulWidget {
   @override
@@ -17,6 +21,8 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   SharedPreferences sharedPreferences;
   int _currentIndex = 0;
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -63,6 +69,7 @@ class _TabsState extends State<Tabs> {
         builder: (context) =>
             AlertDialog(
               title: Text('确定退出程序吗?'),
+              content: Image.network('http://pics.sc.chinaz.com/Files/pic/faces/4480/07.gif'),
               actions: <Widget>[
                 FlatButton(
                   child: Text('暂不'),
